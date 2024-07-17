@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">BAGuessr 3.0</string>
+    <string name="blue_archive_guessing_game">Blue Archive Guessing Game</string>
+    <string name="study">Study</string>
+    <string name="choose_gamemode">Choose Gamemode</string>
+    <string name="guessing_game">Guessing Game</string>
+    <string name="summary">Summary</string>
 </resources>
