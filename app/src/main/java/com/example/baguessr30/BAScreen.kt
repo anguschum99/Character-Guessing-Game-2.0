@@ -128,7 +128,7 @@ fun BAApp(
                 )
 
                 if (uiState.gameOver) {
-                    navController.navigate(BAScreen.Summary.name)
+                            navController.navigate(BAScreen.Summary.name)
                 }
 
             }

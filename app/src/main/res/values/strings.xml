@@ -5,4 +5,5 @@
     <string name="choose_gamemode">Choose Gamemode</string>
     <string name="guessing_game">Guessing Game</string>
     <string name="summary">Summary</string>
+    <string name="next">Next</string>
 </resources>

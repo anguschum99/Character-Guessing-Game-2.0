@@ -15,27 +15,27 @@ import kotlinx.coroutines.flow.update
 
 class BAViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(BAUiState())
-    val uiState:StateFlow<BAUiState> = _uiState.asStateFlow()
+    val uiState: StateFlow<BAUiState> = _uiState.asStateFlow()
 
-    private lateinit var currentStudent:String
-    private lateinit var currentPic:String
+    private lateinit var currentStudent: String
+    private lateinit var currentPic: String
 
     // Current Guess by User
     var userGuess by mutableStateOf("")
         private set
 
     // Used Name List
-    var usedNames = mutableSetOf<String>()
+    private var usedNames = mutableSetOf<String>()
 
     // temporary name holder
-    var temporary = DataSource.studentList.random()
+    private var temporary = DataSource.studentList.random()
 
     init {
         resetGame()
     }
 
     // Sets Username
-    fun updateName(input:String){
+    fun updateName(input: String) {
         _uiState.update { currentState ->
             currentState.copy(
                 username = input
@@ -44,8 +44,7 @@ class BAViewModel : ViewModel() {
     }
 
 
-
-    fun resetGame(){
+    fun resetGame() {
         usedNames.clear()
         _uiState.value =
             BAUiState(
@@ -55,18 +54,17 @@ class BAViewModel : ViewModel() {
     }
 
 
-    private fun setCurrentPicture():String{
+    private fun setCurrentPicture(): String {
 
         return temporary.imageResourceId.toString()
     }
 
-    private fun setCurrentStudent():String{
+    private fun setCurrentStudent(): String {
         temporary = DataSource.studentList.random()
 
-        return if (usedNames.contains(temporary.name)){
+        return if (usedNames.contains(temporary.name)) {
             setCurrentStudent()
-        }
-        else {
+        } else {
             currentStudent = temporary.name
             setCurrentPicture()
             usedNames.add(temporary.name)
@@ -75,16 +73,15 @@ class BAViewModel : ViewModel() {
     }
 
     // Set Current Guess
-    fun changeUserGuess(input: String){
+    fun changeUserGuess(input: String) {
         userGuess = input
     }
 
-    fun checkUserGuess(){
-        if (userGuess.equals(currentStudent, ignoreCase = true)){
+    fun checkUserGuess() {
+        if (userGuess.equals(currentStudent, ignoreCase = true)) {
             val addScore = _uiState.value.score.plus(1)
             updateGameState(addScore)
-        }
-        else{
+        } else {
             _uiState.update { currentState ->
                 currentState.copy(
                     isUserAnswerWrong = true
@@ -95,17 +92,16 @@ class BAViewModel : ViewModel() {
     }
 
 
-    fun updateGameState(newScore:Int){
-        if (usedNames.size.equals(GAME_LENGTH)){
-            _uiState.update {currentState ->
+    fun updateGameState(newScore: Int) {
+        if (usedNames.size.equals(GAME_LENGTH)) {
+            _uiState.update { currentState ->
                 currentState.copy(
                     gameOver = true,
                     score = newScore,
 
-                )
+                    )
             }
-        }
-        else {
+        } else {
             _uiState.update { currentState ->
                 currentState.copy(
                     score = newScore,
@@ -118,11 +114,10 @@ class BAViewModel : ViewModel() {
         }
     }
 
-    fun skipQuestion(){
+    fun skipQuestion() {
         updateGameState(_uiState.value.score)
         changeUserGuess("")
     }
-
 
 
 }
